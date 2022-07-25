@@ -1,4 +1,4 @@
-# Edit PR description with a link to Read the Docs preview
+# Add link to Read the Docs preview to Pull Requests
 
 Bot that automatically edit Pull Requests with link to documentation on Read the Docs.
 
