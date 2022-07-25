@@ -1,6 +1,6 @@
 name: "Read the Docs Pull Request Preview"
 author: "@readthedocs"
-description: "Add a comment with links to the rendered version of the documentation on Read the Docs"
+description: "Update PR description with a link to the rendered version of the documentation on Read the Docs"
 
 branding:
   color: gray
@@ -20,18 +20,7 @@ inputs:
     required: false
   message-template:
     description: "Template message to use for the PR body"
-    default: ":books: :robot: Link to documentation preview: {docs-pr-index-url}\nSpecific pages:\n{docs-pr-file-links}"
-  pretty-urls:
-    description: "End links with 'page.html' or 'page/'"
-    default: false
-    required: false
-  file-path:
-    description: "Path where to check for file modifications"
-    default: "README.md"
-    required: false
-  maximum-links:
-    description: "Maximum numbers of links to put in the comment"
-    default: 3
+    default: ":books: Documentation preview :books:: {docs-pr-index-url}"
     required: false
 
 runs:
@@ -47,7 +36,6 @@ runs:
           var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
           var MESSAGE_SEPARATOR = `${{ inputs.message-separator }}`;
           var MESSAGE_TEMPLATE = `${{ inputs.message-template }}`;
-          var FILE_PATH = `${{ inputs.file-path }}`;
 
           const { data: pull } = await github.rest.pulls.get({
             owner: context.repo.owner,
@@ -62,14 +50,6 @@ runs:
           });
 
           var body_message = `${MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URL)}`;
-          var body_file_links = "";
-          for (let file of pull_files) {
-            if (file.filename.startsWith(FILE_PATH)) {
-              url_path = file.filename.replace(FILE_PATH, "");
-              body_file_links = body_message + "\n" + `* ${RTD_URL}${url_path}`;
-            }
-          }
-          body_message = body_message.replace("{docs-pr-file-links}", body_file_links)
 
           var body = pull.body.split(/\r?\n/);
           body = body.slice(0, body.indexOf(MESSAGE_SEPARATOR));
