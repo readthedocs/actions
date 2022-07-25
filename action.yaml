@@ -43,12 +43,6 @@ runs:
             pull_number: context.issue.number,
           });
 
-          const {data: pull_files } = await github.rest.pulls.listFiles({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            pull_number: context.issue.number,
-          });
-
           var body_message = `${MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URL)}`;
 
           var body = pull.body.split(/\r?\n/);
