@@ -20,12 +20,12 @@ inputs:
     required: false
   message-template:
     description: "Template message to use for the PR body"
-    default: ":books: :robot:\n* Link to documentation preview: {docs-pr-index-url}"
+    default: ":books: :robot: Link to documentation preview: {docs-pr-index-url}\nSpecific pages:\n{docs-pr-file-links}"
   pretty-urls:
     description: "End links with 'page.html' or 'page/'"
     default: false
     required: false
-  path:
+  file-path:
     description: "Path where to check for file modifications"
     default: "docs/"
     required: false
@@ -47,6 +47,7 @@ runs:
           var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
           var MESSAGE_SEPARATOR = `${{ inputs.message-separator }}`;
           var MESSAGE_TEMPLATE = `${{ inputs.message-template }}`;
+          var FILE_PATH = `${{ inputs.file-path }}`;
 
           const { data: pull } = await github.rest.pulls.get({
             owner: context.repo.owner,
@@ -61,12 +62,14 @@ runs:
           });
 
           var body_message = `${MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URL)}`;
-          // for (let file of pull_files) {
-          //   if file.filename.startsWith("${{ inputs.path }}") {
-          //     url_path = file.filename.replace("${{ inputs.path }}", "");
-          //     body_message = body_message + "\n" + `* ${RTD_URL}${url_path}`;
-          //   }
-          // }
+          var body_file_links = "";
+          for (let file of pull_files) {
+            if (file.filename.startsWith(FILE_PATH)) {
+              url_path = file.filename.replace(FILE_PATH, "");
+              body_file_links = body_message + "\n" + `* ${RTD_URL}${url_path}`;
+            }
+          }
+          body_message = body_message.replace("{docs-pr-file-links}", body_file_links)
 
           var body = pull.body.split(/\r?\n/);
           body = body.slice(0, body.indexOf(MESSAGE_SEPARATOR));
