@@ -67,5 +67,5 @@ runs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number,
-            body: issue.body + "\n----\n" + body_message,
+            body: issue["body"] + "\n\n----\n\n" + body_message,
           });
