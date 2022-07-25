@@ -18,6 +18,9 @@ inputs:
     description: "Text to separate the original body of the PR from the auto-inserted text"
     default: "----------"
     required: false
+  message-template:
+    description: "Template message to use for the PR body"
+    default: ":books: :robot:\n* Link to documentation preview: {docs-pr-index-url}"
   pretty-urls:
     description: "End links with 'page.html' or 'page/'"
     default: false
@@ -43,6 +46,7 @@ runs:
           var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}";
           var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
           var MESSAGE_SEPARATOR = `${{ inputs.message-separator }}`;
+          var MESSAGE_TEMPLATE = `${{ inputs.message-template }}`;
 
           const { data: pull } = await github.rest.pulls.get({
             owner: context.repo.owner,
@@ -56,7 +60,7 @@ runs:
             pull_number: context.issue.number,
           });
 
-          var body_message = ":robot: " + RTD_URL;
+          var body_message = `${MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URL)}`;
           // for (let file of pull_files) {
           //   if file.filename.startsWith("${{ inputs.path }}") {
           //     url_path = file.filename.replace("${{ inputs.path }}", "");
@@ -64,9 +68,9 @@ runs:
           //   }
           // }
 
-          var body = pull.body.split(/\r?\n/)
-          body = body.slice(0, body.indexOf(MESSAGE_SEPARATOR))
-          body = body.join("\n").trim() + "\n\n" + MESSAGE_SEPARATOR + "\n\n" + body_message
+          var body = pull.body.split(/\r?\n/);
+          body = body.slice(0, body.indexOf(MESSAGE_SEPARATOR));
+          body = body.join("\n").trim() + "\n\n" + MESSAGE_SEPARATOR + "\n\n" + body_message;
 
           github.rest.pulls.update({
             owner: context.repo.owner,
