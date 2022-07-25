@@ -14,10 +14,10 @@ inputs:
     description: "Project's language on Read the Docs"
     default: "en"
     required: false
-  # message-template:
-  #   description: "Message "
-  #   default: "${ORIGINAL_MESSAGE}\n----\n${PREVIEW_FILE_LINKS}"
-  #   required: false
+  message-separator:
+    description: "Text to separate the original body of the PR from the auto-inserted text"
+    default: "\n\n----\n\n"
+    required: false
   pretty-urls:
     description: "End links with 'page.html' or 'page/'"
     default: false
@@ -48,6 +48,7 @@ runs:
             repo: context.repo.repo,
             pull_number: context.issue.number,
           });
+          var pull_original_body = pull.body.split("${{ inputs.message-separator }}")[0];
 
           const {data: pull_files } = await github.rest.pulls.listFiles({
             owner: context.repo.owner,
@@ -67,5 +68,5 @@ runs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number,
-            body: pull.body + "\n\n----\n\n" + body_message,
+            body: pull_original_body + "${{ inputs.message-separator }}" + body_message,
           });
