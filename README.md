@@ -1,10 +1,10 @@
-# Comment with links to Read the Docs preview
+# Edit PR description with a link to Read the Docs preview
 
-Comment on your Pull Requests with the links to the modified documentation pages on Read the Docs
+Bot that automatically edit Pull Requests with link to documentation on Read the Docs.
 
 ## Example
 
-![Example of a comment with a link to Read the Docs preview](docs/comment-example.png)
+![Example of a description edited with a link to Read the Docs preview](docs/pull-request-example.png)
 
 ## How to use it
 
@@ -23,7 +23,6 @@ on:
   pull_request_target:
     types:
       - opened
-      - synchronize
 
 permissions:
   pull-requests: write
