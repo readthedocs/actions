@@ -38,9 +38,9 @@ runs:
       uses: actions/github-script@v6
       with:
         script: |
-          var PR_NUMBER = context.issue.number;
-          var RTD_PROJECT_SLUG = "${{ inputs.project-slug }}";
-          var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}";
+          var PR_NUMBER = context.issue.number
+          var RTD_PROJECT_SLUG = "${{ inputs.project-slug }}"
+          var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}"
           var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`
 
           var issue = octokit.rest.issues.get({
@@ -57,9 +57,9 @@ runs:
 
           var body_message = ":robot:";
           for (let file of issue_files) {
-            if (file.filename.startsWith("${{ inputs.path }}")) {
+            if file.filename.startsWith("${{ inputs.path }}") {
               url_path = file.filename.replace("${{ inputs.path }}", "");
-              body_message = body_message + "\n" + `* ${RTD_URL}${url_path}`,
+              body_message = body_message + "\n" + `* ${RTD_URL}${url_path}`;
             }
           }
 
