@@ -1,4 +1,4 @@
-# Add link to Read the Docs preview to Pull Requests
+# Add Read the Docs preview's link to Pull Requests
 
 Bot that automatically edit Pull Requests with link to documentation on Read the Docs.
 
