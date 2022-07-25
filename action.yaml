@@ -43,20 +43,20 @@ runs:
           var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}";
           var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
 
-          var issue = github.rest.issues.get({
+          var pull = github.rest.pulls.get({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            issue_number: context.issue.number,
+            pull_number: context.issue.number,
           });
 
-          var issue_files = github.rest.pulls.listFiles({
+          var pull_files = github.rest.pulls.listFiles({
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number,
           });
 
           var body_message = ":robot: " + RTD_URL;
-          // for (let file of issue_files) {
+          // for (let file of pull_files) {
           //   if file.filename.startsWith("${{ inputs.path }}") {
           //     url_path = file.filename.replace("${{ inputs.path }}", "");
           //     body_message = body_message + "\n" + `* ${RTD_URL}${url_path}`;
@@ -67,5 +67,5 @@ runs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number,
-            body: issue["body"] + "\n\n----\n\n" + body_message,
+            body: pull.body + "\n\n----\n\n" + body_message,
           });
