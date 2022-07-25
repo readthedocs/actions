@@ -33,7 +33,6 @@ runs:
     - name: "Comment on Pull Request with Read the Docs' preview links"
       uses: actions/github-script@v6
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
         script:  |
           var PR_NUMBER = context.issue.number
           var RTD_PROJECT_SLUG = "${{ inputs.project-slug }}"
