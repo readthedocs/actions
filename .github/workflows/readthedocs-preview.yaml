@@ -3,12 +3,13 @@ on:
   pull_request_target:
     types:
       - opened
+      - reopened  # TODO: remove
       - synchronize
   # paths:
   #   - 'docs/**'
 
 permissions:
-  pull-request: write
+  pull-requests: write
 
 jobs:
   documentation-links:
