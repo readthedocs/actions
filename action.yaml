@@ -16,7 +16,7 @@ inputs:
     required: false
   message-separator:
     description: "Text to separate the original body of the PR from the auto-inserted text"
-    default: "\n\n----------\n\n"
+    default: "\r\n\r\n----------\r\n\r\n"
     required: false
   pretty-urls:
     description: "End links with 'page.html' or 'page/'"
