@@ -45,9 +45,14 @@ runs:
 
           var body_message = `${MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URL)}`;
 
-          var body = pull.body.split(/\r?\n/);
-          body = body.slice(0, body.indexOf(MESSAGE_SEPARATOR));
-          body = body.join("\n").trim() + "\n\n" + MESSAGE_SEPARATOR + "\n\n" + body_message;
+          var body = "";
+          if (pull.body) {
+            body = pull.body.split(/\r?\n/);
+            body = body.slice(0, body.indexOf(MESSAGE_SEPARATOR));
+            body = body.join("\n").trim()
+          }
+
+          body = body + "\n\n" + MESSAGE_SEPARATOR + "\n\n" + body_message;
 
           github.rest.pulls.update({
             owner: context.repo.owner,
