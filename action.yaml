@@ -42,13 +42,13 @@ runs:
           var RTD_PROJECT_SLUG = "${{ inputs.project-slug }}";
           var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}";
           var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
+          var MESSAGE_SEPARATOR = `${{ inputs.message-separator }}`;
 
           const { data: pull } = await github.rest.pulls.get({
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number,
           });
-          var pull_original_body = pull.body.split("${{ inputs.message-separator }}")[0];
 
           const {data: pull_files } = await github.rest.pulls.listFiles({
             owner: context.repo.owner,
@@ -64,9 +64,10 @@ runs:
           //   }
           // }
 
+          var body = pull.body.split(MESSAGE_SEPARATOR)[0] + MESSAGE_SEPARATOR + body_message;
           github.rest.pulls.update({
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number,
-            body: pull_original_body + "${{ inputs.message-separator }}" + body_message,
+            body: body,
           });
