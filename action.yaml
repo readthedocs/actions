@@ -27,7 +27,7 @@ inputs:
     required: false
   file-path:
     description: "Path where to check for file modifications"
-    default: "docs/"
+    default: "README.md"
     required: false
   maximum-links:
     description: "Maximum numbers of links to put in the comment"
