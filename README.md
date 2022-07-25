@@ -1,2 +1,3 @@
-# readthedocs-preview
-Comment on your Pull Requests with the links to the modified documentation pages on Read the Docs
+# Read the Docs Pull Request Preview
+
+GitHub Action that adds a comment on opened Pull Request with the links to the rendered documentation pages.
