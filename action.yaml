@@ -43,13 +43,13 @@ runs:
           var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}"
           var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`
 
-          var issue = octokit.rest.issues.get({
+          var issue = github.rest.issues.get({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue.number,
           });
 
-          var issue_files = octokit.rest.pulls.listFiles({
+          var issue_files = github.rest.pulls.listFiles({
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number,
