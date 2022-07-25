@@ -1,4 +1,4 @@
-# readthedocs-preview
+# Comment with links to Read the Docs preview
 
 Comment on your Pull Requests with the links to the modified documentation pages on Read the Docs
 
