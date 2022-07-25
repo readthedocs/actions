@@ -14,13 +14,17 @@ inputs:
     description: "Project's language on Read the Docs"
     default: "en"
     required: false
+  # message-template:
+  #   description: "Message "
+  #   default: "${ORIGINAL_MESSAGE}\n----\n${PREVIEW_FILE_LINKS}"
+  #   required: false
   pretty-urls:
     description: "End links with 'page.html' or 'page/'"
     default: false
     required: false
   path:
     description: "Path where to check for file modifications"
-    default: "**"
+    default: "docs/"
     required: false
   maximum-links:
     description: "Maximum numbers of links to put in the comment"
@@ -33,14 +37,35 @@ runs:
     - name: "Comment on Pull Request with Read the Docs' preview links"
       uses: actions/github-script@v6
       with:
-        script:  |
-          var PR_NUMBER = context.issue.number
-          var RTD_PROJECT_SLUG = "${{ inputs.project-slug }}"
-          var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}"
+        script: |
+          var PR_NUMBER = context.issue.number;
+          var RTD_PROJECT_SLUG = "${{ inputs.project-slug }}";
+          var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}";
+          var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`
 
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
+          var issue = octokit.rest.issues.get({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: `:robot: https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`
-          })
+            issue_number: context.issue.number,
+          });
+
+          var issue_files = octokit.rest.pulls.listFiles({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number,
+          });
+
+          var body_message = ":robot:";
+          for (let file of issue_files) {
+            if (file.filename.startsWith("${{ inputs.path }}")) {
+              url_path = file.filename.replace("${{ inputs.path }}", "");
+              body_message = body_message + "\n" + `* ${RTD_URL}${url_path}`,
+            }
+          }
+
+          github.rest.pulls.update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number,
+            body: issue.body + "\n----\n" + body_message,
+          });
