@@ -1,0 +1,31 @@
+name: Read the Docs Pull Request Preview
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+  # paths:
+  #   - 'docs/**'
+
+permissions:
+  pull-request: write
+
+jobs:
+  documentation-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment on Pull Request with Read the Docs preview links
+        uses: actions/github-script@6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script:  |
+            var PR_NUMBER = context.issue.number
+            var RTD_PROJECT_SLUG = "readthedocs-preview"
+            var RTD_PROJECT_LANGUAGE = "en"
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `:robot: https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`
+            })
