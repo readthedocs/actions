@@ -13,6 +13,6 @@ jobs:
   documentation-links:
     runs-on: ubuntu-latest
     steps:
-      - uses: readthedocs/readthedocs-preview@dev
+      - uses: readthedocs/readthedocs-preview@main
         with:
           project-slug: "readthedocs-preview"
