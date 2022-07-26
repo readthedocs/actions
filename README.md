@@ -1,6 +1,6 @@
 # Add Read the Docs preview's link to Pull Requests
 
-Bot that automatically edit Pull Requests with link to documentation on Read the Docs.
+GitHub Action that automatically edits Pull Requests' descriptions with a link to documentation's preview on Read the Docs.
 
 ## Example
 
@@ -37,6 +37,10 @@ jobs:
 ```
 
 
-Note that you have to replace `readthedocs-preview` with the `project-slug` for your own project.
+Once you add this GitHub Action to your repository, next time anybody opens a Pull Request,
+the description will be edited to include the link to Read the Docs' documentation preview.
+
+> Note that _you have to_ replace `readthedocs-preview` with the `project-slug` for your own project.
+> You can find it in your Read the Docs' projects page in the right side of the page under "Project Slug".
 
 
