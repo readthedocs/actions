@@ -1,8 +1,8 @@
 module.exports = async ({inputs, github, context}) => {
     var PR_NUMBER = context.issue.number;
-    var RTD_PROJECT_SLUG = "${{ inputs.project-slug }}";
-    var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}";
-    var RTD_PLATFORM = "${{ inputs.platform }}";
+    var RTD_PROJECT_SLUG = inputs["project-slug"];
+    var RTD_PROJECT_LANGUAGE = inputs["project-language"];
+    var RTD_PLATFORM = inputs["platform"];
     if (RTD_PLATFORM == "community") {
         var RTD_DOMAIN = "org.readthedocs.build";
     }
@@ -13,7 +13,7 @@ module.exports = async ({inputs, github, context}) => {
 
     var MESSAGE_SEPARATOR_START = `<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\n`;
     var MESSAGE_SEPARATOR_END = `\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} end -->`;
-    var MESSAGE_TEMPLATE = "${{ inputs.message-template }}";
+    var MESSAGE_TEMPLATE = inputs["message-template"];
 
     const { data: pull } = await github.rest.pulls.get({
         owner: context.repo.owner,

@@ -37,5 +37,11 @@ runs:
       uses: actions/github-script@v6
       with:
         script: |
+          var inputs = {
+            "project-slug": "${{ inputs.project-slug }}",
+            "project-language": "${{ inputs.project-language }}",
+            "message-template": `${{ inputs.message-template }}`,
+            "platform": "${{ inputs.platform }}",
+          }
           const script = require("./scripts/edit-description.js");
-          await script({${{ inputs }}, github, context});
+          await script({inputs, github, context});
