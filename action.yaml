@@ -14,49 +14,24 @@ inputs:
     description: "Project's language on Read the Docs"
     default: "en"
     required: false
-  message-separator:
-    description: "Text to separate the original body of the PR from the auto-inserted text"
-    default: "----------"
-    required: false
   message-template:
     description: "Template message to use for the PR body"
-    default: ":books: Documentation preview :books:: {docs-pr-index-url}"
+    default: |
+      ----
+      :books: Documentation preview :books:: {docs-pr-index-url}
+    required: false
+  platform:
+    description: "Read the Docs Community or Read the Docs for Business (community or business)"
+    default: "community"
     required: false
 
 runs:
   using: "composite"
   steps:
+    - uses: actions/checkout@v3
     - name: "Comment on Pull Request with Read the Docs' preview links"
       uses: actions/github-script@v6
       with:
         script: |
-          var PR_NUMBER = context.issue.number;
-          var RTD_PROJECT_SLUG = "${{ inputs.project-slug }}";
-          var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}";
-          var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.org.readthedocs.build/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
-          var MESSAGE_SEPARATOR = `${{ inputs.message-separator }}`;
-          var MESSAGE_TEMPLATE = `${{ inputs.message-template }}`;
-
-          const { data: pull } = await github.rest.pulls.get({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            pull_number: context.issue.number,
-          });
-
-          var body_message = `${MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URL)}`;
-
-          var body = "";
-          if (pull.body) {
-            body = pull.body.split(/\r?\n/);
-            body = body.slice(0, body.indexOf(MESSAGE_SEPARATOR));
-            body = body.join("\n").trim()
-          }
-
-          body = body + "\n\n" + MESSAGE_SEPARATOR + "\n\n" + body_message;
-
-          github.rest.pulls.update({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            pull_number: context.issue.number,
-            body: body,
-          });
+          const script = require("./scripts/edit-description.js");
+          script({inputs, github, context});
