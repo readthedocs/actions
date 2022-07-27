@@ -29,6 +29,10 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v3
+      with:
+        repository: "readthedocs/readthedocs-preview"
+        ref: "main"
+
     - name: "Comment on Pull Request with Read the Docs' preview links"
       uses: actions/github-script@v6
       with:
