@@ -1,4 +1,4 @@
-module.exports = ({inputs, github, context}) => {
+module.exports = async ({inputs, github, context}) => {
     var PR_NUMBER = context.issue.number;
     var RTD_PROJECT_SLUG = "${{ inputs.project-slug }}";
     var RTD_PROJECT_LANGUAGE = "${{ inputs.project-language }}";
