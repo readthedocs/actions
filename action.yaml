@@ -38,4 +38,4 @@ runs:
       with:
         script: |
           const script = require("./scripts/edit-description.js");
-          await script({inputs, github, context});
+          await script({${{ inputs }}, github, context});
