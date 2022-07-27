@@ -11,8 +11,8 @@ module.exports = async ({inputs, github, context}) => {
     }
     var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
 
-    var MESSAGE_SEPARATOR_START = `\n\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\n`;
-    var MESSAGE_SEPARATOR_END = `\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} end -->`;
+    var MESSAGE_SEPARATOR_START = `\r\n\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\r\n`;
+    var MESSAGE_SEPARATOR_END = `\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} end -->`;
     var MESSAGE_TEMPLATE = inputs["message-template"];
 
     const { data: pull } = await github.rest.pulls.get({
