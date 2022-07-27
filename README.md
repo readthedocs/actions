@@ -43,4 +43,12 @@ the description will be edited to include the link to Read the Docs' documentati
 > Note that _you have to_ replace `readthedocs-preview` with the `project-slug` for your own project.
 > You can find it in your Read the Docs' projects page in the right side of the page under "Project Slug".
 
+## Configuration
 
+These are all the parameters this action supports:
+
+* `project-slug` (**_required_**): Project's slug on Read the Docs. You can find it on your Read the Docs project's details page in the right menu under "Project Slug".
+* `project-language` (_optional_): Project's language code on Read the Docs. Example: `en` for English, `es` for Spanish, etc. (default: `en`)
+* `message-template` (_optional_): Text message to be injected by the action in the Pull Request description. It supports the following placeholders to be replaced:
+  * `{docs-pr-index-url}`: URL to the root of the documentation for the Pull Request preview.  
+* `platform` (_optional_): Read the Docs Community (`community`) or Read the Docs for Business (`business`). (default: `community`)
