@@ -11,7 +11,7 @@ module.exports = async ({inputs, github, context}) => {
     }
     var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
 
-    var MESSAGE_SEPARATOR_START = `<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\n`;
+    var MESSAGE_SEPARATOR_START = `\n\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\n`;
     var MESSAGE_SEPARATOR_END = `\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} end -->`;
     var MESSAGE_TEMPLATE = inputs["message-template"];
 
@@ -25,9 +25,20 @@ module.exports = async ({inputs, github, context}) => {
 
     var body = "";
     if (pull.body) {
-        body = pull.body.slice(0, pull.body.indexOf(MESSAGE_SEPARATOR_START));
-        body = body + MESSAGE_SEPARATOR_START + body_message + MESSAGE_SEPARATOR_END;
-        body = body + pull.body.slice(pull.body.indexOf(MESSAGE_SEPARATOR_END) + MESSAGE_SEPARATOR_END.length);
+        if (pull.body.indexOf(MESSAGE_SEPARATOR_START) == -1) {
+            // First time updating this description
+            body = pull.body + MESSAGE_SEPARATOR_START + body_message + MESSAGE_SEPARATOR_END;
+        }
+        else {
+            // We already updated this description before
+            body = pull.body.slice(0, pull.body.indexOf(MESSAGE_SEPARATOR_START));
+            body = body + MESSAGE_SEPARATOR_START + body_message + MESSAGE_SEPARATOR_END;
+            body = body + pull.body.slice(pull.body.indexOf(MESSAGE_SEPARATOR_END) + MESSAGE_SEPARATOR_END.length);
+        }
+    }
+    else {
+        // Pull Request description is empty
+        body = MESSAGE_SEPARATOR_START + body_message + MESSAGE_SEPARATOR_END;
     }
 
     github.rest.pulls.update({
