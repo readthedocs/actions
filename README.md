@@ -40,7 +40,7 @@ jobs:
 Once you add this GitHub Action to your repository, next time anybody opens a Pull Request,
 the description will be edited to include the link to Read the Docs' documentation preview.
 
-> Note that _you have to_ replace `readthedocs-preview` with the `project-slug` for your own project.
+> Note that **_you have to_ replace `readthedocs-preview` with the `project-slug` for your own project**.
 > You can find it in your Read the Docs' projects page in the right side of the page under "Project Slug".
 
 ## Configuration
