@@ -30,8 +30,8 @@ runs:
   steps:
     - uses: actions/checkout@v3
       with:
-        repository: "readthedocs/readthedocs-preview"
-        ref: "main"
+        repository: "readthedocs/actions"
+        ref: "v1"
 
     - name: "Comment on Pull Request with Read the Docs' preview links"
       uses: actions/github-script@v6
@@ -43,5 +43,5 @@ runs:
             "message-template": `${{ inputs.message-template }}`,
             "platform": "${{ inputs.platform }}",
           }
-          const script = require("./scripts/edit-description.js");
+          const script = require("./preview/scripts/edit-description.js");
           await script({inputs, github, context});

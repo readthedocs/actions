@@ -1,54 +1,23 @@
-# Add Read the Docs preview's link to Pull Requests
+# GitHub Actions for Read the Docs
 
-GitHub Action that automatically edits Pull Requests' descriptions with a link to documentation's preview on Read the Docs.
+This repository contains all the official GitHub Actions for Read the Docs.
 
-## Example
+## Release and tags
 
-![Example of a description edited with a link to Read the Docs preview](docs/pull-request-example.png)
+We follow the conventions defined by GitHub at
+[Using release management for actions](https://docs.github.com/en/actions/creating-actions/about-custom-actions#using-release-management-for-actions)
 
-## How to use it
-
-
-First, enable "Preview Documentation from Pull Requests" in your Read the Docs project by following this guide
-https://docs.readthedocs.io/en/latest/pull-requests.html
-
-
-After that, create a [GitHub Action](https://docs.github.com/en/actions) in your repository with the following content:
+We recommend you to pin to the latest stable version,  `v1`, as follows:
 
 ```yaml
-# .github/workflows/documentation-links.yaml
-
-name: Read the Docs Pull Request Preview
-on:
-  pull_request_target:
-    types:
-      - opened
-
-permissions:
-  pull-requests: write
-
-jobs:
-  documentation-links:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: readthedocs/readthedocs-preview@main
-        with:
-          project-slug: "readthedocs-preview"
+ - uses: readthedocs/actions/preview@v1
 ```
 
+## List of actions
 
-Once you add this GitHub Action to your repository, next time anybody opens a Pull Request,
-the description will be edited to include the link to Read the Docs' documentation preview.
+1. [readthedocs/actions/preview](https://github.com/readthedocs/actions/tree/v1/preview): Add Read the Docs preview's link to Pull Requests
 
-> Note that **_you have to_ replace `readthedocs-preview` with the `project-slug` for your own project**.
-> You can find it in your Read the Docs' projects page in the right side of the page under "Project Slug".
 
-## Configuration
+## License![MIT licensed](https://img.shields.io/github/license/readthedocs/actions)
 
-These are all the parameters this action supports:
-
-* `project-slug` (**_required_**): Project's slug on Read the Docs. You can find it on your Read the Docs project's details page in the right menu under "Project Slug".
-* `project-language` (_optional_): Project's language code on Read the Docs. Example: `en` for English, `es` for Spanish, etc. (default: `en`)
-* `message-template` (_optional_): Text message to be injected by the action in the Pull Request description. It supports the following placeholders to be replaced:
-  * `{docs-pr-index-url}`: URL to the root of the documentation for the Pull Request preview.  
-* `platform` (_optional_): Read the Docs Community (`community`) or Read the Docs for Business (`business`). (default: `community`)
+All the actions in this repository are published with the [MIT](./LICENSE) license.
