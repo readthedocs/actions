@@ -16,9 +16,9 @@ https://docs.readthedocs.io/en/latest/pull-requests.html
 After that, create a [GitHub Action](https://docs.github.com/en/actions) in your repository with the following content:
 
 ```yaml
-# .github/workflows/documentation-links.yaml
+# .github/workflows/pull-request-links.yaml
 
-name: Read the Docs Pull Request Preview
+name: readthedocs/actions
 on:
   pull_request_target:
     types:
@@ -28,7 +28,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  documentation-links:
+  pull-request-links:
     runs-on: ubuntu-latest
     steps:
       - uses: readthedocs/actions/preview@v1
