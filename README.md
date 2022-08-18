@@ -2,6 +2,8 @@
 
 This repository contains all the official GitHub Actions for Read the Docs.
 
+Testing GH Action's name
+
 ## Release and tags
 
 We follow the conventions defined by GitHub at
