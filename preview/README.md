@@ -23,7 +23,7 @@ on:
   pull_request_target:
     types:
       - opened
-    # Execute this action only on PRs that touches
+    # Execute this action only on PRs that touch
     # documentation files.
     # paths:
     #   - "docs/**"
