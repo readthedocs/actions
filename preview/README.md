@@ -23,6 +23,10 @@ on:
   pull_request_target:
     types:
       - opened
+    # Execute this action only on PRs that touches
+    # documentation files.
+    # paths:
+    #   - "docs/**"
 
 permissions:
   pull-requests: write
