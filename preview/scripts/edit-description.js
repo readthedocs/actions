@@ -9,7 +9,12 @@ module.exports = async ({inputs, github, context}) => {
     if (RTD_PLATFORM == "business") {
         var RTD_DOMAIN = "com.readthedocs.build";
     }
-    var RTD_URL = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
+    var RTD_DOMAIN = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/`;
+    if (RTD_SINGLE_VERSION == "true") {
+        RTD_URL = RTD_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
+    } else {
+        RTD_URL = RTD_DOMAIN; 
+    }
 
     var MESSAGE_SEPARATOR_START = `\r\n\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\r\n`;
     var MESSAGE_SEPARATOR_END = `\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} end -->`;

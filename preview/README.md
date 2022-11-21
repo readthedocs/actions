@@ -56,3 +56,4 @@ These are all the parameters this action supports:
 * `message-template` (_optional_): Text message to be injected by the action in the Pull Request description. It supports the following placeholders to be replaced:
   * `{docs-pr-index-url}`: URL to the root of the documentation for the Pull Request preview.
 * `platform` (_optional_): Read the Docs Community (`community`) or Read the Docs for Business (`business`). (default: `community`)
+* `single_version` (_optional_): Set this to `'true'` if your project is single version, so we can link to the correct URL. (default: `false`)

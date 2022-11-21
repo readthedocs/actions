@@ -24,6 +24,10 @@ inputs:
     description: "Read the Docs Community or Read the Docs for Business (community or business)"
     default: "community"
     required: false
+  single_version:
+    description: "Site is a single verison project, so link to the top level."
+    default: 'false' 
+    required: false
 
 runs:
   using: "composite"
