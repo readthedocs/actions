@@ -11,9 +11,9 @@ module.exports = async ({inputs, github, context}) => {
     }
     var RTD_DOMAIN = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/`;
     if (RTD_SINGLE_VERSION == "true") {
-        RTD_URL = RTD_DOMAIN; 
+        var RTD_URL = RTD_DOMAIN; 
     } else {
-        RTD_URL = RTD_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
+        var RTD_URL = RTD_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
     }
 
     var MESSAGE_SEPARATOR_START = `\r\n\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\r\n`;
