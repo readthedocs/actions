@@ -3,11 +3,14 @@ module.exports = async ({inputs, github, context}) => {
     var RTD_PROJECT_SLUG = inputs["project-slug"];
     var RTD_PROJECT_LANGUAGE = inputs["project-language"];
     var RTD_PLATFORM = inputs["platform"];
+    var RTD_SINGLE_VERSION = inputs["single-version"];
+
     if (RTD_PLATFORM == "community") {
         var RTD_DOMAIN = "org.readthedocs.build";
-    }
-    if (RTD_PLATFORM == "business") {
+    } else if (RTD_PLATFORM == "business") {
         var RTD_DOMAIN = "com.readthedocs.build";
+    } else {
+        // Log warning here?
     }
     var RTD_DOMAIN = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/`;
     if (RTD_SINGLE_VERSION == "true") {
