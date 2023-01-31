@@ -46,6 +46,7 @@ runs:
             "project-language": "${{ inputs.project-language }}",
             "message-template": `${{ inputs.message-template }}`,
             "platform": "${{ inputs.platform }}",
+            "single-version": "${{ inputs.single-version }}",
           }
           const script = require("./preview/scripts/edit-description.js");
           await script({inputs, github, context});
