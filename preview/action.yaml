@@ -25,7 +25,7 @@ inputs:
     default: "community"
     required: false
   single-version:
-    description: "Site is a single verison project, so link to the top level."
+    description: "Site is a single version project, so link to the top level."
     default: 'false' 
     required: false
 
