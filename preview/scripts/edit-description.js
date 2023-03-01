@@ -1,31 +1,31 @@
 module.exports = async ({inputs, github, context}) => {
-    var PR_NUMBER = context.issue.number;
-    var RTD_PROJECT_SLUG = inputs["project-slug"];
-    var RTD_PROJECT_LANGUAGE = inputs["project-language"];
-    var RTD_PLATFORM = inputs["platform"];
-    var RTD_SINGLE_VERSION = inputs["single-version"];
+    const PR_NUMBER = context.issue.number;
+    const RTD_PROJECT_SLUG = inputs["project-slug"];
+    const RTD_PROJECT_LANGUAGE = inputs["project-language"];
+    const RTD_PLATFORM = inputs["platform"];
+    const RTD_SINGLE_VERSION = inputs["single-version"];
 
-    var RTD_DOMAIN = "";
-    var RTD_URL = "";
+    let RTD_DOMAIN = "";
+    let RTD_URL = "";
 
-    if (RTD_PLATFORM == "community") {
+    if (RTD_PLATFORM === "community") {
         RTD_DOMAIN = "org.readthedocs.build";
-    } else if (RTD_PLATFORM == "business") {
+    } else if (RTD_PLATFORM === "business") {
         RTD_DOMAIN = "com.readthedocs.build";
     } else {
         // Log warning here?
     }
-    var RTD_PROJECT_DOMAIN = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/`;
+    const RTD_PROJECT_DOMAIN = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/`;
 
-    if (RTD_SINGLE_VERSION == "true") {
+    if (RTD_SINGLE_VERSION === "true") {
         RTD_URL = RTD_PROJECT_DOMAIN;
     } else {
         RTD_URL = RTD_PROJECT_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
     }
 
-    var MESSAGE_SEPARATOR_START = `\r\n\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\r\n`;
-    var MESSAGE_SEPARATOR_END = `\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} end -->`;
-    var MESSAGE_TEMPLATE = inputs["message-template"];
+    const MESSAGE_SEPARATOR_START = `\r\n\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\r\n`;
+    const MESSAGE_SEPARATOR_END = `\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} end -->`;
+    const MESSAGE_TEMPLATE = inputs["message-template"];
 
     const { data: pull } = await github.rest.pulls.get({
         owner: context.repo.owner,
@@ -33,11 +33,11 @@ module.exports = async ({inputs, github, context}) => {
         pull_number: context.issue.number,
     });
 
-    var body_message = MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URL);
+    const body_message = MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URL);
 
-    var body = "";
+    let body = "";
     if (pull.body) {
-        if (pull.body.indexOf(MESSAGE_SEPARATOR_START) == -1) {
+        if (pull.body.indexOf(MESSAGE_SEPARATOR_START) === -1) {
             // First time updating this description
             body = pull.body + MESSAGE_SEPARATOR_START + body_message + MESSAGE_SEPARATOR_END;
         }
