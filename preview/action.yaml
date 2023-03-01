@@ -41,7 +41,7 @@ runs:
       uses: actions/github-script@v6
       with:
         script: |
-          var inputs = {
+          const inputs = {
             "project-slug": "${{ inputs.project-slug }}",
             "project-language": "${{ inputs.project-language }}",
             "message-template": `${{ inputs.message-template }}`,
