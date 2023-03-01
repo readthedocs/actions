@@ -8,16 +8,16 @@ module.exports = async ({inputs, github, context}) => {
     let RTD_DOMAIN = "";
     let RTD_URL = "";
 
-    if (RTD_PLATFORM == "community") {
+    if (RTD_PLATFORM === "community") {
         RTD_DOMAIN = "org.readthedocs.build";
-    } else if (RTD_PLATFORM == "business") {
+    } else if (RTD_PLATFORM === "business") {
         RTD_DOMAIN = "com.readthedocs.build";
     } else {
         // Log warning here?
     }
     const RTD_PROJECT_DOMAIN = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/`;
 
-    if (RTD_SINGLE_VERSION == "true") {
+    if (RTD_SINGLE_VERSION === "true") {
         RTD_URL = RTD_PROJECT_DOMAIN;
     } else {
         RTD_URL = RTD_PROJECT_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
@@ -37,7 +37,7 @@ module.exports = async ({inputs, github, context}) => {
 
     let body = "";
     if (pull.body) {
-        if (pull.body.indexOf(MESSAGE_SEPARATOR_START) == -1) {
+        if (pull.body.indexOf(MESSAGE_SEPARATOR_START) === -1) {
             // First time updating this description
             body = pull.body + MESSAGE_SEPARATOR_START + body_message + MESSAGE_SEPARATOR_END;
         }
