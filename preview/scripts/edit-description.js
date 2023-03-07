@@ -45,7 +45,7 @@ module.exports = async ({inputs, github, context}) => {
     });
 
 
-    const body_message = MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URLS.join("\r\n"));
+    const body_message = MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URLS.join());
 
     let body = "";
     if (pull.body) {
