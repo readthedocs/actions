@@ -10,7 +10,7 @@ inputs:
   project-slug:
     description: "Project's slug on Read the Docs"
     required: true
-  project-languages:
+  project-language:
     description: "Project's language on Read the Docs"
     default: "en"
     required: false
@@ -44,7 +44,7 @@ runs:
         script: |
           const inputs = {
             "project-slug": "${{ inputs.project-slug }}",
-            "project-languages": "${{ inputs.project-languages }}",
+            "project-language": "${{ inputs.project-language }}",
             "message-template": `${{ inputs.message-template }}`,
             "platform": "${{ inputs.platform }}",
             "single-version": "${{ inputs.single-version }}",

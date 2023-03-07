@@ -1,7 +1,7 @@
 module.exports = async ({inputs, github, context}) => {
     const PR_NUMBER = context.issue.number;
     const RTD_PROJECT_SLUG = inputs["project-slug"];
-    const RTD_PROJECT_LANGUAGES = inputs["project-languages"].split(",");
+    const RTD_PROJECT_LANGUAGES = inputs["project-language"].split(",");
     const RTD_PLATFORM = inputs["platform"];
     const RTD_SINGLE_VERSION = inputs["single-version"];
 
