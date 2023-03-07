@@ -10,7 +10,7 @@ inputs:
   project-slug:
     description: "Project's slug on Read the Docs"
     required: true
-  project-language:
+  project-languages:
     description: "Project's language on Read the Docs"
     default: "en"
     required: false
@@ -18,7 +18,8 @@ inputs:
     description: "Template message to use for the PR body"
     default: |
       ----
-      :books: Documentation preview :books:: {docs-pr-index-url}
+      :books: Documentation preview :books::
+      {docs-pr-index-url}
     required: false
   platform:
     description: "Read the Docs Community or Read the Docs for Business (community or business)"
@@ -26,7 +27,7 @@ inputs:
     required: false
   single-version:
     description: "Site is a single version project, so link to the top level."
-    default: 'false' 
+    default: 'false'
     required: false
 
 runs:
@@ -43,7 +44,7 @@ runs:
         script: |
           const inputs = {
             "project-slug": "${{ inputs.project-slug }}",
-            "project-language": "${{ inputs.project-language }}",
+            "project-languages": "${{ inputs.project-languages }}",
             "message-template": `${{ inputs.message-template }}`,
             "platform": "${{ inputs.platform }}",
             "single-version": "${{ inputs.single-version }}",

@@ -1,7 +1,7 @@
 module.exports = async ({inputs, github, context}) => {
     const PR_NUMBER = context.issue.number;
     const RTD_PROJECT_SLUG = inputs["project-slug"];
-    const RTD_PROJECT_LANGUAGE = inputs["project-language"];
+    const RTD_PROJECT_LANGUAGES = inputs["project-languages"].split(",");
     const RTD_PLATFORM = inputs["platform"];
     const RTD_SINGLE_VERSION = inputs["single-version"];
 
@@ -15,12 +15,20 @@ module.exports = async ({inputs, github, context}) => {
     } else {
         // Log warning here?
     }
-    const RTD_PROJECT_DOMAIN = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/`;
 
-    if (RTD_SINGLE_VERSION === "true") {
-        RTD_URL = RTD_PROJECT_DOMAIN;
-    } else {
-        RTD_URL = RTD_PROJECT_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
+    let RTD_URLS = [];
+
+    for (let i = 0; i < RTD_PROJECT_LANGUAGES.length; i++) {
+        const RTD_PROJECT_LANGUAGE = RTD_PROJECT_LANGUAGES[i];
+        const RTD_PROJECT_DOMAIN = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/`;
+
+        if (RTD_SINGLE_VERSION === "true") {
+            RTD_URL = RTD_PROJECT_DOMAIN;
+        } else {
+            RTD_URL = RTD_PROJECT_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
+        }
+
+        RTD_URLS.push(RTD_URL);
     }
 
     const MESSAGE_SEPARATOR_START = `\r\n\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\r\n`;
@@ -33,7 +41,10 @@ module.exports = async ({inputs, github, context}) => {
         pull_number: context.issue.number,
     });
 
-    const body_message = MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URL);
+
+    const body_message = RTD_URLS.forEach((url) => {
+        return MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", url);
+    }).join("\r\n");
 
     let body = "";
     if (pull.body) {
