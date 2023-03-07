@@ -42,7 +42,7 @@ module.exports = async ({inputs, github, context}) => {
     });
 
 
-    const body_message = RTD_URLS.forEach((url) => {
+    const body_message = RTD_URLS.map((url) => {
         return MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", url);
     }).join("\r\n");
 
