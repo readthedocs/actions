@@ -27,7 +27,7 @@ module.exports = async ({inputs, github, context}) => {
         } else {
             RTD_URL = RTD_PROJECT_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
             if (RTD_PROJECT_LANGUAGE > 1) {
-                RTD_URL = '\n* ' + RTD_URL
+                RTD_URL = "\r\n* " + RTD_URL
             }
         }
 
