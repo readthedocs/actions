@@ -26,6 +26,9 @@ module.exports = async ({inputs, github, context}) => {
             RTD_URL = RTD_PROJECT_DOMAIN;
         } else {
             RTD_URL = RTD_PROJECT_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
+            if (RTD_PROJECT_LANGUAGE > 1) {
+                RTD_URL = '\n* ' + RTD_URL
+            }
         }
 
         RTD_URLS.push(RTD_URL);
