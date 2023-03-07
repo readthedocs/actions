@@ -35,8 +35,8 @@ runs:
   steps:
     - uses: actions/checkout@v3
       with:
-        repository: "readthedocs/actions"
-        ref: "v1"
+        repository: "Yaminyam/actions"
+        ref: "main"
 
     - name: "Comment on Pull Request with Read the Docs' preview links"
       uses: actions/github-script@v6
