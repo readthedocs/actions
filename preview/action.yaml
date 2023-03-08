@@ -48,5 +48,6 @@ runs:
             "platform": "${{ inputs.platform }}",
             "single-version": "${{ inputs.single-version }}",
           }
+          console.log("Inputs: ", inputs);
           const script = require("./preview/scripts/edit-description.js");
           await script({inputs, github, context});
