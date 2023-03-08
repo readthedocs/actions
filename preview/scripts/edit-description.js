@@ -5,6 +5,8 @@ module.exports = async ({inputs, github, context}) => {
     const RTD_PLATFORM = inputs["platform"];
     const RTD_SINGLE_VERSION = inputs["single-version"];
 
+    github.log.debug(`Language: ${inputs["project-language"]}`);
+
     let RTD_DOMAIN = "";
     let RTD_URL = "";
 
