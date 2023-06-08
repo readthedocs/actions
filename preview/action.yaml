@@ -28,25 +28,11 @@ inputs:
     description: "Site is a single version project, so link to the top level."
     default: 'false' 
     required: false
+  github-token:
+    description: The GitHub token used to create an authenticated client
+    default: ${{ github.token }}
+    required: false
 
 runs:
-  using: "composite"
-  steps:
-    - uses: actions/checkout@v3
-      with:
-        repository: "readthedocs/actions"
-        ref: "v1"
-
-    - name: "Comment on Pull Request with Read the Docs' preview links"
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const inputs = {
-            "project-slug": "${{ inputs.project-slug }}",
-            "project-language": "${{ inputs.project-language }}",
-            "message-template": `${{ inputs.message-template }}`,
-            "platform": "${{ inputs.platform }}",
-            "single-version": "${{ inputs.single-version }}",
-          }
-          const script = require("./preview/scripts/edit-description.js");
-          await script({inputs, github, context});
+  using: "node16"
+  main: 'scripts/edit-description.js'
