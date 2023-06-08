@@ -35,4 +35,4 @@ inputs:
 
 runs:
   using: "node16"
-  main: 'scripts/edit-description.js'
+  main: 'dist/index.js'
