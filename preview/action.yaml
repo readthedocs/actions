@@ -17,7 +17,7 @@ inputs:
   message-template:
     description: "Template message to use for the PR body"
     default: |
-      ----
+      ---
       :books: Documentation preview :books:: {docs-pr-index-url}
     required: false
   platform:
