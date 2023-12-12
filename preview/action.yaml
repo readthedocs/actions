@@ -18,7 +18,7 @@ inputs:
     description: "Template message to use for the PR body"
     default: |
       ----
-      :books: Documentation preview :books:: {docs-pr-index-url}
+      📚 Documentation preview 📚: {docs-pr-index-url}
     required: false
   platform:
     description: "Read the Docs Community or Read the Docs for Business (community or business)"
