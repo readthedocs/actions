@@ -26,7 +26,7 @@ inputs:
     required: false
   single-version:
     description: "Site is a single version project, so link to the top level."
-    default: 'false' 
+    default: 'false'
     required: false
 
 runs:
