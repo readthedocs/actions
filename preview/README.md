@@ -52,8 +52,6 @@ the description will be edited to include the link to Read the Docs' documentati
 
 These are all the parameters this action supports:
 * `project-slug` (**_required_**): Project's slug on Read the Docs. You can find it on your Read the Docs project's details page in the right menu under "Project Slug".
-* `project-language` (_optional_): Project's language code on Read the Docs. Example: `en` for English, `es` for Spanish, etc. (default: `en`)
 * `message-template` (_optional_): Text message to be injected by the action in the Pull Request description. It supports the following placeholders to be replaced:
   * `{docs-pr-index-url}`: URL to the root of the documentation for the Pull Request preview.
 * `platform` (_optional_): Read the Docs Community (`community`) or Read the Docs for Business (`business`). (default: `community`)
-* `single-version` (_optional_): Set this to `'true'` if your project is single version, so we can link to the correct URL. (default: `'false'`)

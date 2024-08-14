@@ -10,10 +10,6 @@ inputs:
   project-slug:
     description: "Project's slug on Read the Docs"
     required: true
-  project-language:
-    description: "Project's language on Read the Docs"
-    default: "en"
-    required: false
   message-template:
     description: "Template message to use for the PR body"
     default: |
@@ -23,10 +19,6 @@ inputs:
   platform:
     description: "Read the Docs Community or Read the Docs for Business (community or business)"
     default: "community"
-    required: false
-  single-version:
-    description: "Site is a single version project, so link to the top level."
-    default: 'false'
     required: false
 
 runs:

@@ -1,26 +1,39 @@
-module.exports = async ({inputs, github, context}) => {
+module.exports = async ({ inputs, github, context }) => {
     const PR_NUMBER = context.issue.number;
     const RTD_PROJECT_SLUG = inputs["project-slug"];
-    const RTD_PROJECT_LANGUAGE = inputs["project-language"];
     const RTD_PLATFORM = inputs["platform"];
-    const RTD_SINGLE_VERSION = inputs["single-version"];
 
     let RTD_DOMAIN = "";
     let RTD_URL = "";
+    let RTD_PROJECT_ENDPOINT = "";
 
     if (RTD_PLATFORM === "community") {
         RTD_DOMAIN = "org.readthedocs.build";
+        RTD_PROJECT_ENDPOINT = `https://readthedocs.org/api/v3/projects/${RTD_PROJECT_SLUG}/`;
     } else if (RTD_PLATFORM === "business") {
         RTD_DOMAIN = "com.readthedocs.build";
+        RTD_PROJECT_ENDPOINT = `https://readthedocs.com/api/v3/projects/${RTD_PROJECT_SLUG}/`;
     } else {
         // Log warning here?
     }
     const RTD_PROJECT_DOMAIN = `https://${RTD_PROJECT_SLUG}--${PR_NUMBER}.${RTD_DOMAIN}/`;
 
-    if (RTD_SINGLE_VERSION === "true") {
+    // Get project details from the RTD API
+    const project = await fetch(RTD_PROJECT_ENDPOINT, {}).catch((error) => {
+        throw new Error(`Failed to fetch project details from Read the Docs API: ${error}`);
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error(`Failed to fetch project details from Read the Docs API: ${project.statusText}`);
+        }
+        return response.json();
+    });
+
+    if (project.versioning_scheme === "single_version_without_translations") {
         RTD_URL = RTD_PROJECT_DOMAIN;
-    } else {
-        RTD_URL = RTD_PROJECT_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
+    } else if (project.versioning_scheme === "multiple_versions_with_translations") {
+        RTD_URL = RTD_PROJECT_DOMAIN + `${project.language.code}/${PR_NUMBER}/`;
+    } else if (project.versioning_scheme === "multiple_versions_without_translations") {
+        RTD_URL = RTD_PROJECT_DOMAIN + `${PR_NUMBER}/`;
     }
 
     const MESSAGE_SEPARATOR_START = `\r\n\r\n<!-- readthedocs-preview ${RTD_PROJECT_SLUG} start -->\r\n`;
