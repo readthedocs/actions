@@ -28,12 +28,11 @@ on:
     # paths:
     #   - "docs/**"
 
-permissions:
-  pull-requests: write
-
 jobs:
   documentation-links:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: readthedocs/actions/preview@v1
         with:
