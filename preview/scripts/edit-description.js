@@ -33,7 +33,7 @@ module.exports = async ({inputs, github, context}) => {
         pull_number: context.issue.number,
     });
 
-    const body_message = MESSAGE_TEMPLATE.replace("{docs-pr-index-url}", RTD_URL);
+    const body_message = MESSAGE_TEMPLATE.replaceAll("{docs-pr-index-url}", RTD_URL);
 
     let body = "";
     if (pull.body) {
