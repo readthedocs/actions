@@ -4,6 +4,7 @@ module.exports = async ({inputs, github, context}) => {
     const RTD_PROJECT_LANGUAGE = inputs["project-language"];
     const RTD_PLATFORM = inputs["platform"];
     const RTD_SINGLE_VERSION = inputs["single-version"];
+    const RTD_SINGLE_LANGUAGE = inputs["single-language"];
 
     let RTD_DOMAIN = "";
     let RTD_URL = "";
@@ -19,6 +20,8 @@ module.exports = async ({inputs, github, context}) => {
 
     if (RTD_SINGLE_VERSION === "true") {
         RTD_URL = RTD_PROJECT_DOMAIN;
+    } else if (RTD_SINGLE_LANGUAGE) {
+        RTD_URL = RTD_PROJECT_DOMAIN + `${RTD_SINGLE_LANGUAGE}/`;
     } else {
         RTD_URL = RTD_PROJECT_DOMAIN + `${RTD_PROJECT_LANGUAGE}/${PR_NUMBER}/`;
     }
