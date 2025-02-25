@@ -28,6 +28,10 @@ inputs:
     description: "Site is a single version project, so link to the top level."
     default: 'false'
     required: false
+  single-language:
+    description: "Site is a single language project, so don't include a language in the link."
+    default: 'false'
+    required: false
 
 runs:
   using: "composite"
@@ -47,6 +51,7 @@ runs:
             "message-template": `${{ inputs.message-template }}`,
             "platform": "${{ inputs.platform }}",
             "single-version": "${{ inputs.single-version }}",
+            "single-language": "${{ inputs.single-language }}",
           }
           const script = require("./preview/scripts/edit-description.js");
           await script({inputs, github, context});
