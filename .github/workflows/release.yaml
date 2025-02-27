@@ -1,0 +1,68 @@
+name: release
+run-name: Prepare release
+
+on:
+  push:
+    # Run only on full tag release (v1.0.0). Do not run on partial tags like v1 or v1.0
+    tags: [ "v[0-9]+.[0-9]+.[0-9]+" ]
+
+jobs:
+  release:
+    name: Create release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get major and minor versions
+        uses: actions-ecosystem/action-regex-match@v2
+        id: get-major-minor
+        with:
+          text: ${{ github.ref_name }}
+          regex: '^v([0-9]+)\.([0-9]+)\.[0-9]+'
+      - name: Create release notes
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Read the Docs Actions ${{ github.ref_name }}
+          draft: true
+          generate_release_notes: true
+      - name: Bump major version tag v${{ steps.get-major-minor.outputs.group1 }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            try {
+                await github.git.deleteRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: "tags/v${{ steps.get-major-minor.outputs.group1 }}"
+                })
+            } catch (e) {
+              console.log("The v${{ steps.get-major-minor.outputs.group1 }} tag doesn't exist yet: " + e)
+            }
+            await github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/v${{ steps.get-major-minor.outputs.group1 }}",
+              sha: context.sha
+            })
+      - name: Bump minor version tag v${{ steps.get-major-minor.outputs.group1 }}.${{ steps.get-major-minor.outputs.group2 }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            try {
+                await github.git.deleteRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: "tags/v${{ steps.get-major-minor.outputs.group1 }}.${{ steps.get-major-minor.outputs.group2 }}"
+                })
+            } catch (e) {
+              console.log("The v${{ steps.get-major-minor.outputs.group1 }}.${{ steps.get-major-minor.outputs.group2 }} tag doesn't exist yet: " + e)
+            }
+            await github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/v${{ steps.get-major-minor.outputs.group1 }}.${{ steps.get-major-minor.outputs.group2 }}",
+              sha: context.sha
+            })
