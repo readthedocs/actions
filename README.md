@@ -1,5 +1,11 @@
 # GitHub Actions for Read the Docs
 
+
+> [!WARNING]  
+> **This action is deprecated and it shouldn't be used.**
+> This feature was included in the Read the Docs application itself.
+> Read more about it at https://about.readthedocs.com/blog/2025/06/announcing-our-github-app-beta/
+
 This repository contains all the official GitHub Actions for Read the Docs.
 
 ## Release and tags
