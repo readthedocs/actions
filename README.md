@@ -4,7 +4,7 @@
 > [!WARNING]  
 > **This action is deprecated and it shouldn't be used.**
 > This feature was included in the Read the Docs application itself.
-> Read more about it at https://about.readthedocs.com/blog/2025/06/announcing-our-github-app-beta/
+> For more information, check [our documentation](https://docs.readthedocs.com/platform/stable/visual-diff.html#show-build-overview-in-pull-requests).
 
 This repository contains all the official GitHub Actions for Read the Docs.
 
