@@ -1,5 +1,11 @@
 # Add Read the Docs preview's link to Pull Requests
 
+> [!WARNING]  
+> **This action is deprecated and it shouldn't be used.**
+> This feature is now included in the Read the Docs application itself.
+> You should remove the workflow file  `.github/workflows/documentation-links.yml` from your repository, and instead use the Read the Docs application.
+> For more information, check [our documentation](https://docs.readthedocs.com/platform/stable/visual-diff.html#show-build-overview-in-pull-requests).
+
 GitHub Action that automatically edits Pull Requests' descriptions with a link to documentation's preview on Read the Docs.
 
 ## Example

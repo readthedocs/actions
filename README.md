@@ -1,9 +1,9 @@
 # GitHub Actions for Read the Docs
 
-
 > [!WARNING]  
 > **This action is deprecated and it shouldn't be used.**
-> This feature was included in the Read the Docs application itself.
+> This feature is now included in the Read the Docs application itself.
+> You should remove the workflow file  `.github/workflows/documentation-links.yml` from your repository, and instead use the Read the Docs application.
 > For more information, check [our documentation](https://docs.readthedocs.com/platform/stable/visual-diff.html#show-build-overview-in-pull-requests).
 
 This repository contains all the official GitHub Actions for Read the Docs.
